@@ -17,7 +17,7 @@ public class UIConstants {
 
     public static Map<Integer, Color> getColors() {
         if (colors.isEmpty()) {
-            colors.put(1, Color.RED);
+            colors.put(1, Color.BLACK);
             colors.put(2, Color.YELLOW);
             colors.put(3, Color.BLUE);
             colors.put(4, Color.CYAN);
@@ -26,7 +26,7 @@ public class UIConstants {
             colors.put(7, Color.MAGENTA);
             colors.put(8, Color.DARK_GRAY);
             colors.put(9, Color.LIGHT_GRAY);
-            colors.put(10, Color.BLACK);
+            colors.put(10, Color.RED);
         }
         return colors;
     }

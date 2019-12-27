@@ -7,7 +7,6 @@ import static edu.perso.race.views.UIConstants.*;
 
 public class UIGraph extends JPanel {
     private UICar[] uiCars;
-    private Color color;
 
     public UIGraph(UICar[] uiCars) {
         super();
@@ -36,7 +35,13 @@ public class UIGraph extends JPanel {
         for (int i = 1; i <= nbSection; i++)
             g.drawLine(i * GRAPH_SECTION_GAP, yGraphPosition - GRAPH_MARKERS_WIDTH, i * GRAPH_SECTION_GAP, yGraphPosition + GRAPH_MARKERS_WIDTH);
 
-
+        if(uiCars != null) {
+        for (UICar uiCar : uiCars) {
+                System.out.println(uiCar.getColor().toString());
+                g.setColor(uiCar.getColor());
+                g.drawLine(xGraphPositionStart, yGraphPosition - 15, xGraphPositionStart, yGraphPosition + 15);
+            }
+        }
         //marqueur result
 //        if (max - min != 0) {
 //            g.setColor(Color.red);

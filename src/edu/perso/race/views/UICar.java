@@ -9,7 +9,6 @@ import static edu.perso.race.views.UIConstants.MAIN_FRAME_WIDTH;
 import static edu.perso.race.views.UIConstants.UI_CAR_LABEL_HEIGHT;
 
 public class UICar extends JLabel {
-    private final int X_MARGIN = 30;
     private Car car;
     private Color color;
 
@@ -17,7 +16,8 @@ public class UICar extends JLabel {
         super(car.toString());
         this.car = car;
         color = UIConstants.getColors().get(car.getId());
-        setPreferredSize(new Dimension(MAIN_FRAME_WIDTH - X_MARGIN, UI_CAR_LABEL_HEIGHT));
+        int xMargin = 30;
+        setPreferredSize(new Dimension(MAIN_FRAME_WIDTH - xMargin, UI_CAR_LABEL_HEIGHT));
         setOpaque(true);
         setBackground(color);
         setForeground(UIUtils.optimizeContrast(color));

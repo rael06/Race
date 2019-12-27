@@ -19,8 +19,8 @@ public class UIRace extends JFrame {
     public UIRace() {
         super("Race");
         init();
-        initGraphPanel();
         initCars();
+        initGraphPanel();
         showRace();
     }
 
@@ -33,6 +33,8 @@ public class UIRace extends JFrame {
         setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT + 50 + race.getCars().length * UI_CAR_FRAME_HEIGHT + 6));
         pack();
         setLocationRelativeTo(null);
+        add(graphPanel);
+        add(uiCarsPanel);
     }
 
     public void initCars() {
@@ -48,7 +50,6 @@ public class UIRace extends JFrame {
             uiCarsPanel.add(uiCars[i]);
         }
         uiCarsPanel.setBackground(Color.WHITE);
-        add(uiCarsPanel);
     }
 
     public void showRace() {
@@ -72,10 +73,10 @@ public class UIRace extends JFrame {
     }
 
     public void initGraphPanel() {
-        graphPanel.add(new UIGraph(uiCars));
+        UIGraph uiGraph = new UIGraph(uiCars);
+        graphPanel.add(uiGraph);
         graphPanel.setBackground(Color.WHITE);
         graphPanel.setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT));
-        add(graphPanel);
     }
 
     public void updateGraphPanel() {

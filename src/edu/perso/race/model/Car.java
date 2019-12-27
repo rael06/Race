@@ -24,7 +24,7 @@ public class Car implements Runnable {
                 e.printStackTrace();
             }
             restDistance -= sectionDistance;
-            System.out.println(this);
+            //System.out.println(this);
         }
         finished = true;
     }
