@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         Race race = Race.getInstance();
-        race.initRace(5000, 10);
+        race.initRace(20000, 3);
 
         new UIRace();
     }

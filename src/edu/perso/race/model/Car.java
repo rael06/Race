@@ -2,7 +2,7 @@ package edu.perso.race.model;
 
 import java.util.Random;
 
-public class Car implements Runnable {
+public class Car extends Thread implements Runnable {
     private int restDistance;
     private int id;
     private boolean finished;
@@ -17,15 +17,16 @@ public class Car implements Runnable {
     public void run() {
         int sectionDistance;
         while (restDistance > 0) {
-            sectionDistance = new Random().nextInt(1000) + 200;
+            sectionDistance = new Random().nextInt(50);
             try {
-                Thread.sleep(sectionDistance);
+                sleep(sectionDistance);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            restDistance -= sectionDistance;
+            restDistance -= 10;
             //System.out.println(this);
         }
+        restDistance = 0;
         finished = true;
     }
 
@@ -35,14 +36,14 @@ public class Car implements Runnable {
 
     @Override
     public String toString() {
-        return "Voiture n°" + id;
+        return "Car n°" + id;
     }
 
     public int getRestDistance() {
         return restDistance;
     }
 
-    public int getId() {
+    public int getCarId() {
         return id;
     }
 }

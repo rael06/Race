@@ -17,16 +17,16 @@ public class UIConstants {
 
     public static Map<Integer, Color> getColors() {
         if (colors.isEmpty()) {
-            colors.put(1, Color.BLACK);
-            colors.put(2, Color.YELLOW);
-            colors.put(3, Color.BLUE);
+            colors.put(1, Color.RED);
+            colors.put(2, Color.BLUE);
+            colors.put(3, Color.GREEN);
             colors.put(4, Color.CYAN);
             colors.put(5, Color.PINK);
             colors.put(6, Color.ORANGE);
-            colors.put(7, Color.MAGENTA);
-            colors.put(8, Color.DARK_GRAY);
-            colors.put(9, Color.LIGHT_GRAY);
-            colors.put(10, Color.RED);
+            colors.put(7, Color.DARK_GRAY);
+            colors.put(8, Color.LIGHT_GRAY);
+            colors.put(9, Color.YELLOW);
+            colors.put(10, Color.MAGENTA);
         }
         return colors;
     }

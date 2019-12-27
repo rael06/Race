@@ -1,5 +1,7 @@
 package edu.perso.race.views;
 
+import edu.perso.race.model.Race;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,9 @@ import static edu.perso.race.views.UIConstants.*;
 
 public class UIGraph extends JPanel {
     private UICar[] uiCars;
+    private int yGraphPosition;
+    private int xGraphPositionStart;
+    private int graphWidth;
 
     public UIGraph(UICar[] uiCars) {
         super();
@@ -16,10 +21,10 @@ public class UIGraph extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        int xGraphPositionStart = 50;
         int xGraphPositionEnd = MAIN_FRAME_WIDTH - 50;
-        int graphWidth = xGraphPositionEnd - xGraphPositionStart;
-        int yGraphPosition = getHeight() / 2;
+        xGraphPositionStart = 50;
+        graphWidth = xGraphPositionEnd - xGraphPositionStart;
+        yGraphPosition = getHeight() / 2;
 
         //horizontal scale
         g.drawLine(xGraphPositionStart, yGraphPosition, xGraphPositionEnd, yGraphPosition);
@@ -32,22 +37,28 @@ public class UIGraph extends JPanel {
 
         //graduation
         double nbSection = graphWidth / GRAPH_SECTION_GAP;
-        for (int i = 1; i <= nbSection; i++)
+        for (int i = 1; i <= nbSection; i++) {
             g.drawLine(i * GRAPH_SECTION_GAP, yGraphPosition - GRAPH_MARKERS_WIDTH, i * GRAPH_SECTION_GAP, yGraphPosition + GRAPH_MARKERS_WIDTH);
-
-        if(uiCars != null) {
-        for (UICar uiCar : uiCars) {
-                System.out.println(uiCar.getColor().toString());
-                g.setColor(uiCar.getColor());
-                g.drawLine(xGraphPositionStart, yGraphPosition - 15, xGraphPositionStart, yGraphPosition + 15);
-            }
         }
-        //marqueur result
-//        if (max - min != 0) {
-//            g.setColor(Color.red);
-//            g.drawLine(3, (max-result) * 200/(max-min), 17, (max-result) * 200/(max-min));
-//            System.out.println((max-result) * 200/(max-min));
-//        }
+    }
+
+    public void updateCarPos() {
+        Graphics g = getGraphics();
+        int carPosX;
+        int restDistance;
+        for (UICar uiCar : uiCars) {
+            restDistance = uiCar.getCar().getRestDistance();
+            carPosX = Race.getInstance().getDistance() - restDistance;
+            carPosX = (int) Math.floor(carPosX * graphWidth / Race.getInstance().getDistance()) + xGraphPositionStart;
+//            System.out.println(carPosX);
+            g.setColor(uiCar.getColor());
+            g.drawLine(carPosX, yGraphPosition - 15, carPosX, yGraphPosition + 15);
+        }
+        try {
+            Thread.sleep(15);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {

@@ -15,7 +15,7 @@ public class UICar extends JLabel {
     public UICar(Car car) {
         super(car.toString());
         this.car = car;
-        color = UIConstants.getColors().get(car.getId());
+        color = UIConstants.getColors().get(car.getCarId());
         int xMargin = 30;
         setPreferredSize(new Dimension(MAIN_FRAME_WIDTH - xMargin, UI_CAR_LABEL_HEIGHT));
         setOpaque(true);

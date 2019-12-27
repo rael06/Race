@@ -6,7 +6,6 @@ import edu.perso.race.model.Race;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import static edu.perso.race.views.UIConstants.*;
 
@@ -14,6 +13,7 @@ public class UIRace extends JFrame {
     private Race race = Race.getInstance();
     private JPanel uiCarsPanel = new JPanel();
     private JPanel graphPanel = new JPanel();
+    private UIGraph uiGraph;
     private UICar[] uiCars;
 
     public UIRace() {
@@ -56,12 +56,8 @@ public class UIRace extends JFrame {
         race.start();
         while (Arrays.stream(race.getCars()).noneMatch(Car::isFinished)) {
             updateUICarsPanel();
+            uiGraph.updateCarPos();
             revalidate();
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
         }
     }
 
@@ -73,7 +69,7 @@ public class UIRace extends JFrame {
     }
 
     public void initGraphPanel() {
-        UIGraph uiGraph = new UIGraph(uiCars);
+        uiGraph = new UIGraph(uiCars);
         graphPanel.add(uiGraph);
         graphPanel.setBackground(Color.WHITE);
         graphPanel.setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT));
