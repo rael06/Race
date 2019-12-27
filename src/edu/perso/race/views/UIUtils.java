@@ -7,7 +7,6 @@ public class UIUtils {
         int red = color.getRed();
         int green = color.getGreen();
         int blue = color.getBlue();
-
-        return red * 0.299 + green * 0.587 + blue * 0.114 > 186 ? Color.BLACK : Color.WHITE;
+        return red * 0.299 + green * 0.730 + blue * 0.114 > 186 ? Color.BLACK : Color.WHITE;
     }
 }

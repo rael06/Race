@@ -1,13 +1,15 @@
 package edu.perso.race.views;
 
+import edu.perso.race.model.Car;
 import edu.perso.race.model.Race;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 import static edu.perso.race.views.UIConstants.*;
 
-public class UIGraph extends JPanel {
+public class UIGraph extends JPanel implements Runnable {
     private UICar[] uiCars;
     private int yGraphPosition;
     private int xGraphPositionStart;
@@ -42,26 +44,24 @@ public class UIGraph extends JPanel {
         }
     }
 
-    public void updateCarPos() {
-        Graphics g = getGraphics();
-        int carPosX;
-        int restDistance;
-        for (UICar uiCar : uiCars) {
-            restDistance = uiCar.getCar().getRestDistance();
-            carPosX = Race.getInstance().getDistance() - restDistance;
-            carPosX = (int) Math.floor(carPosX * graphWidth / Race.getInstance().getDistance()) + xGraphPositionStart;
-//            System.out.println(carPosX);
-            g.setColor(uiCar.getColor());
-            g.drawLine(carPosX, yGraphPosition - 15, carPosX, yGraphPosition + 15);
-        }
-        try {
-            Thread.sleep(15);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void init() {
         setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT));
+    }
+
+    @Override
+    public void run() {
+        while (Arrays.stream(Race.getInstance().getCars()).noneMatch(Car::isFinished)) {
+            getParent().repaint(1000);
+            Graphics g = getGraphics();
+            int carPosX;
+            int restDistance;
+            for (UICar uiCar : uiCars) {
+                restDistance = uiCar.getCar().getRestDistance();
+                carPosX = Race.getInstance().getDistance() - restDistance;
+                carPosX = (int) Math.floor(carPosX * graphWidth / Race.getInstance().getDistance()) + xGraphPositionStart;
+                g.setColor(uiCar.getColor());
+                g.fillRect(carPosX, yGraphPosition - 15, 2, 30);
+            }
+        }
     }
 }

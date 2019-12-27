@@ -54,9 +54,15 @@ public class UIRace extends JFrame {
 
     public void showRace() {
         race.start();
+        Thread t = new Thread(uiGraph);
+        t.start();
         while (Arrays.stream(race.getCars()).noneMatch(Car::isFinished)) {
             updateUICarsPanel();
-            uiGraph.updateCarPos();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             revalidate();
         }
     }
