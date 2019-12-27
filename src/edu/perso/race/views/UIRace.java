@@ -8,14 +8,18 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import static edu.perso.race.views.UIConstants.*;
+
 public class UIRace extends JFrame {
-    Race race = Race.getInstance();
-    JPanel uiCarsPanel = new JPanel();
-    UICar[] uiCars;
+    private Race race = Race.getInstance();
+    private JPanel uiCarsPanel = new JPanel();
+    private JPanel graphPanel = new JPanel();
+    private UICar[] uiCars;
 
     public UIRace() {
         super("Race");
         init();
+        initGraphPanel();
         initCars();
         showRace();
     }
@@ -26,32 +30,31 @@ public class UIRace extends JFrame {
         setLayout(fl);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setPreferredSize(new Dimension(600, 400));
+        setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT + 50 + race.getCars().length * UI_CAR_FRAME_HEIGHT + 6));
         pack();
         setLocationRelativeTo(null);
-        add(uiCarsPanel);
     }
 
     public void initCars() {
         FlowLayout fl = new FlowLayout();
         fl.setAlignment(FlowLayout.CENTER);
+
         uiCarsPanel.setLayout(fl);
         uiCarsPanel.setVisible(true);
-        uiCarsPanel.setPreferredSize(new Dimension(600, 400));
+        uiCarsPanel.setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, race.getCars().length * UI_CAR_FRAME_HEIGHT));
         uiCars = new UICar[race.getCars().length];
         for (int i = 0; i < race.getCars().length; i++) {
             uiCars[i] = new UICar(race.getCars()[i]);
             uiCarsPanel.add(uiCars[i]);
         }
+        uiCarsPanel.setBackground(Color.WHITE);
+        add(uiCarsPanel);
     }
 
     public void showRace() {
         race.start();
         while (Arrays.stream(race.getCars()).noneMatch(Car::isFinished)) {
-            Arrays.sort(uiCars, new SortByUICarRestDistance());
-            for(int i=0; i<uiCars.length; i++) {
-                uiCarsPanel.setComponentZOrder(uiCars[i], i);
-            }
+            updateUICarsPanel();
             revalidate();
 //            try {
 //                Thread.sleep(100);
@@ -60,12 +63,22 @@ public class UIRace extends JFrame {
 //            }
         }
     }
-}
 
-class SortByUICarRestDistance implements Comparator<UICar>
-{
-    @Override
-    public int compare(UICar o1, UICar o2) {
-        return o1.getCar().getRestDistance() - o2.getCar().getRestDistance();
+    public void updateUICarsPanel() {
+        Arrays.sort(uiCars, new SortByUICarRestDistance());
+        for (int i = 0; i < uiCars.length; i++) {
+            uiCarsPanel.setComponentZOrder(uiCars[i], i);
+        }
+    }
+
+    public void initGraphPanel() {
+        graphPanel.add(new UIGraph(uiCars));
+        graphPanel.setBackground(Color.WHITE);
+        graphPanel.setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, GRAPH_HEIGHT));
+        add(graphPanel);
+    }
+
+    public void updateGraphPanel() {
+
     }
 }
