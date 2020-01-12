@@ -1,5 +1,6 @@
 package edu.perso.race.views;
 
+import edu.perso.race.model.Car;
 import edu.perso.race.model.Race;
 
 import javax.swing.*;
@@ -49,7 +50,7 @@ public class UIGraph extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        while (Arrays.stream(Race.getInstance().getCars()).anyMatch(c->!c.isFinished())) {
+        while (Arrays.stream(Race.getInstance().getCars()).anyMatch(Car::isRunning)) {
             getParent().repaint();
             Graphics g = getGraphics();
             int carPosX;

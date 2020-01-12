@@ -1,5 +1,6 @@
 package edu.perso.race.views;
 
+import edu.perso.race.model.Car;
 import edu.perso.race.model.Race;
 
 import javax.swing.*;
@@ -15,9 +16,10 @@ public class UIRace extends JFrame implements Runnable {
     private JPanel graphPanel = new JPanel();
     private JPanel configPanel = new JPanel();
     private JButton startButton = new JButton("Start");
-    private JButton readyButton = new JButton("Ready");
-    private UIFieldPanel distanceField = new UIFieldPanel("Distance");
-    private UIFieldPanel nbCarField = new UIFieldPanel("number of cars");
+    private UIFieldPanel distanceField = new UIFieldPanel("Distance (set around 3000 for best experience)");
+    private UIFieldPanel nbCarField = new UIFieldPanel("number of cars (1 to 10 max)");
+    private JPanel counterPanel = new JPanel();
+    private JLabel counter = new JLabel("");
     private UIGraph uiGraph;
     private UICar[] uiCars;
 
@@ -50,13 +52,12 @@ public class UIRace extends JFrame implements Runnable {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonsPanel.setPreferredSize(new Dimension(MAIN_FRAME_WIDTH, 40));
-        readyButton.setPreferredSize(new Dimension(200, 30));
-        readyButton.addActionListener(this::ready);
         startButton.setPreferredSize(new Dimension(200, 30));
         startButton.addActionListener(this::start);
-        buttonsPanel.add(readyButton);
         buttonsPanel.add(startButton);
         configPanel.add(buttonsPanel);
+        counterPanel.add(counter);
+        configPanel.add(counterPanel);
     }
 
     public void initCars() {
@@ -76,18 +77,29 @@ public class UIRace extends JFrame implements Runnable {
     }
 
     public void showRace() {
+        for (int i = WARMUP_COUNT; i > 0; i--) {
+            try {
+                counter.setText("start in :   "+ i + "");
+                revalidate();
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        counter.setText("Go !!!");
         race.start();
         Thread t = new Thread(uiGraph);
         t.start();
-        while (Arrays.stream(race.getCars()).anyMatch(c -> !c.isFinished())) {
+        while (Arrays.stream(race.getCars()).anyMatch(Car::isRunning)) {
             updateUICarsPanel();
             try {
-                Thread.sleep(300);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             revalidate();
         }
+        counter.setText("Finished !!!");
     }
 
     public void updateUICarsPanel() {
@@ -106,12 +118,9 @@ public class UIRace extends JFrame implements Runnable {
     }
 
     private void start(ActionEvent actionEvent) {
-        Thread t = new Thread(this);
-        t.start();
-    }
-
-    private void ready(ActionEvent actionEvent) {
-        if (!distanceField.getField().getText().isEmpty() && !nbCarField.getField().getText().isEmpty()) {
+        String nbCarText = nbCarField.getField().getText();
+        String distanceText = distanceField.getField().getText();
+        if (!distanceText.isEmpty() && !distanceText.equals("0") && !nbCarText.isEmpty() && !nbCarText.equals("0")) {
             int distance = Integer.parseInt(distanceField.getField().getText());
             int nbCar = Integer.parseInt(nbCarField.getField().getText());
             race.init(distance, nbCar);
@@ -121,6 +130,8 @@ public class UIRace extends JFrame implements Runnable {
             pack();
             setLocationRelativeTo(null);
             revalidate();
+            Thread t = new Thread(this);
+            t.start();
         }
     }
 

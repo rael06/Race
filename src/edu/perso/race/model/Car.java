@@ -23,15 +23,15 @@ public class Car extends Thread implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            restDistance -= 0.5;
+            restDistance -= 1;
             //System.out.println(this);
         }
         restDistance = 0;
         finished = true;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isRunning() {
+        return !finished;
     }
 
     @Override

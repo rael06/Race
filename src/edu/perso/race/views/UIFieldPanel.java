@@ -10,7 +10,7 @@ public class UIFieldPanel extends JPanel {
         UIFieldTitle t = new UIFieldTitle(title);
         field = new UIField();
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(UIConstants.MAIN_FRAME_WIDTH / 4, 70));
+        setPreferredSize(new Dimension(UIConstants.MAIN_FRAME_WIDTH/4, 70));
 
         add(BorderLayout.NORTH, t);
         add(BorderLayout.CENTER, field);

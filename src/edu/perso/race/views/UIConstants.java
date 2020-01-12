@@ -15,6 +15,7 @@ public class UIConstants {
     public static final int GRAPH_SECTION_GAP = 50;
     public static final int GRAPH_BORDERS_WIDTH = 5;
     public static final int GRAPH_MARKERS_WIDTH = 2;
+    public static final int WARMUP_COUNT = 5;
 
     public static Map<Integer, Color> colors = new HashMap<>();
 
