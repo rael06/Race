@@ -17,13 +17,13 @@ public class Car extends Thread implements Runnable {
     public void run() {
         int sectionDistance;
         while (restDistance > 0) {
-            sectionDistance = new Random().nextInt(50);
+            sectionDistance = new Random().nextInt(16);
             try {
                 sleep(sectionDistance);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            restDistance -= 10;
+            restDistance -= 0.5;
             //System.out.println(this);
         }
         restDistance = 0;

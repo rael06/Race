@@ -1,6 +1,5 @@
 package edu.perso.race.views;
 
-import edu.perso.race.model.Car;
 import edu.perso.race.model.Race;
 
 import javax.swing.*;
@@ -50,8 +49,8 @@ public class UIGraph extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        while (Arrays.stream(Race.getInstance().getCars()).noneMatch(Car::isFinished)) {
-            getParent().repaint(1000);
+        while (Arrays.stream(Race.getInstance().getCars()).anyMatch(c->!c.isFinished())) {
+            getParent().repaint();
             Graphics g = getGraphics();
             int carPosX;
             int restDistance;
@@ -60,7 +59,7 @@ public class UIGraph extends JPanel implements Runnable {
                 carPosX = Race.getInstance().getDistance() - restDistance;
                 carPosX = (int) Math.floor(carPosX * graphWidth / Race.getInstance().getDistance()) + xGraphPositionStart;
                 g.setColor(uiCar.getColor());
-                g.fillRect(carPosX, yGraphPosition - 15, 2, 30);
+                g.fillRect(carPosX, yGraphPosition - UI_GRAPH_CAR_HEIGHT/2, UI_GRAPH_CAR_WIDTH, UI_GRAPH_CAR_HEIGHT);
             }
         }
     }

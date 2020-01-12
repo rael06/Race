@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UIConstants {
-    public static final int MAIN_FRAME_WIDTH = 600;
+    public static final int MAIN_FRAME_WIDTH = 1600;
+    public static final int CONFIG_HEIGHT = 200;
     public static final int UI_CAR_FRAME_HEIGHT = 36;
     public static final int UI_CAR_LABEL_HEIGHT = 30;
+    public static final int UI_GRAPH_CAR_WIDTH = 3;
+    public static final int UI_GRAPH_CAR_HEIGHT = 50;
     public static final int GRAPH_HEIGHT = 200;
     public static final int GRAPH_SECTION_GAP = 50;
     public static final int GRAPH_BORDERS_WIDTH = 5;
